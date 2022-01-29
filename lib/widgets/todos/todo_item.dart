@@ -41,8 +41,8 @@ class TodoItem extends StatelessWidget {
                   horizontal: 16,
                 ),
                 margin: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 8,
+                  vertical: 5,
+                  horizontal: 5,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
