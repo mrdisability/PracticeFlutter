@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practice_flutter/screens/splash_screen.dart';
 import 'package:practice_flutter/screens/todos_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -26,7 +27,9 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink)
                     .copyWith(secondary: Colors.pink),
               ),
-              home: TodosScreen());
+              home: appSnapshot.connectionState != ConnectionState.done
+                  ? SplashScreen()
+                  : const TodosScreen());
         });
   }
 }
