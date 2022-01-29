@@ -1,3 +1,3 @@
-# practice_flutter
+# PracticeFlutter
 
 ## Firebase (Firestore)
