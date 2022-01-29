@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "337141701499",
+    "project_id": "practicevuejs-9ea7a",
+    "storage_bucket": "practicevuejs-9ea7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337141701499:android:f4d0d7a4b3b5d529797bde",
+        "android_client_info": {
+          "package_name": "com.example.practice_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337141701499-pnrj4psq2kteic2oqpeid5rhu9douht0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Fm_pyF1dxksRoJta8JjulTujpJBl94Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337141701499-pnrj4psq2kteic2oqpeid5rhu9douht0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337141701499:android:d694e2093f70e73d797bde",
+        "android_client_info": {
+          "package_name": "com.lkdigital.androidfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337141701499-pnrj4psq2kteic2oqpeid5rhu9douht0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Fm_pyF1dxksRoJta8JjulTujpJBl94Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337141701499-pnrj4psq2kteic2oqpeid5rhu9douht0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
