@@ -13,11 +13,37 @@ class _EditTodoState extends State<EditTodo> {
   final todoId;
   _EditTodoState(this.todoId);
 
+  var isChecked = false;
+
   final _todoController = TextEditingController();
   var _enteredTodo = "";
-  var _enteredCompleted = false;
 
   CollectionReference todos = FirebaseFirestore.instance.collection('todos');
+
+  //(todoDocs?[index].data() as dynamic)['todo']
+
+  getTodo() {
+    FirebaseFirestore.instance
+        .collection('todos')
+        .doc(todoId.value)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        //print('Document data: ${documentSnapshot.data()}');
+
+        _todoController.text = (documentSnapshot.data() as dynamic)['todo'];
+        isChecked = (documentSnapshot.data() as dynamic)['completed'];
+
+        setState(() {
+          isChecked = isChecked;
+        });
+
+        print((documentSnapshot.data() as dynamic)['completed']);
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+  }
 
   // void _sendTodo() async {
   //   FocusScope.of(context).unfocus();
@@ -32,19 +58,32 @@ class _EditTodoState extends State<EditTodo> {
   Future<void> updateTodo() {
     return todos
         .doc(todoId.value)
-        .update({'todo': _enteredTodo, 'completed': _enteredCompleted})
-        .then((value) => print("Todo Updated"))
-        .catchError((error) => print("Failed to update todo: $error"));
+        .update({'todo': _enteredTodo, 'completed': isChecked}).then((value) {
+      getTodo();
+    }).catchError((error) => print("Failed to update todo: $error"));
   }
 
   @override
   void initState() {
-    _todoController.text = todoId.value;
+    getTodo();
+
     return super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.red;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Todo"),
@@ -54,21 +93,33 @@ class _EditTodoState extends State<EditTodo> {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            Expanded(
-              child: TextField(
-                controller: _todoController,
-                textCapitalization: TextCapitalization.sentences,
-                autocorrect: true,
-                enableSuggestions: true,
-                decoration: const InputDecoration(labelText: 'Todo'),
-                onChanged: (value) {
-                  setState(() {
-                    _enteredTodo = value;
-                  });
-                },
-              ),
+            TextField(
+              controller: _todoController,
+              textCapitalization: TextCapitalization.sentences,
+              autocorrect: true,
+              enableSuggestions: true,
+              decoration: const InputDecoration(labelText: 'Todo'),
+              onChanged: (value) {
+                setState(() {
+                  _enteredTodo = value;
+                });
+              },
             ),
-            Text(todoId.value),
+            Row(
+              children: [
+                const Text("Completed"),
+                Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  value: isChecked,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isChecked = value!;
+                    });
+                  },
+                ),
+              ],
+            ),
             TextButton(
               style: ButtonStyle(
                 overlayColor: MaterialStateProperty.resolveWith<Color?>(
