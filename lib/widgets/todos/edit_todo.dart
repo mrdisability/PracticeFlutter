@@ -36,6 +36,7 @@ class _EditTodoState extends State<EditTodo> {
 
         setState(() {
           isChecked = isChecked;
+          _enteredTodo = _todoController.text;
         });
 
         print((documentSnapshot.data() as dynamic)['completed']);
@@ -54,6 +55,15 @@ class _EditTodoState extends State<EditTodo> {
   //
   //   Navigator.pop(context);
   // }
+
+  Future<void> deleteTodo() {
+    return todos.doc(todoId.value).delete().then((value) {
+      print("Todo Deleted");
+
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }).catchError((error) => print("Failed to delete todo: $error"));
+  }
 
   Future<void> updateTodo() {
     return todos
@@ -131,9 +141,62 @@ class _EditTodoState extends State<EditTodo> {
                 }),
               ),
               onPressed: () {
-                _enteredTodo.trim().isEmpty ? null : updateTodo();
+                updateTodo();
               },
-              child: const Text('Update'),
+              child: const Text(
+                'Update',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
+            // TextButton(
+            //   style: ButtonStyle(
+            //     overlayColor: MaterialStateProperty.resolveWith<Color?>(
+            //         (Set<MaterialState> states) {
+            //       if (states.contains(MaterialState.focused)) {
+            //         return Colors.red;
+            //       }
+            //       return null; // Defer to the widget's default.
+            //     }),
+            //   ),
+            //   onPressed: () => showDialog<String>(
+            //     context: context,
+            //     builder: (BuildContext context) => AlertDialog(
+            //       title: const Text('Delete this todo?'),
+            //       actions: <Widget>[
+            //         TextButton(
+            //           onPressed: () => Navigator.pop(context, 'Cancel'),
+            //           child: const Text('Cancel'),
+            //         ),
+            //         TextButton(
+            //           onPressed: () => deleteTodo(),
+            //           child: const Text('OK'),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   child: const Text('Delete'),
+            // ),
+            IconButton(
+              color: Colors.red,
+              icon: const Icon(
+                Icons.delete,
+              ),
+              onPressed: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Delete this todo?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => deleteTodo(),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
         ),
