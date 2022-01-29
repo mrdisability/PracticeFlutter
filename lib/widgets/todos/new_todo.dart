@@ -18,6 +18,8 @@ class _NewTodoState extends State<NewTodo> {
     FirebaseFirestore.instance.collection('todos').add(
         {'todo': _enteredTodo, 'created': Timestamp.now(), 'completed': false});
     _controller.clear();
+
+    Navigator.pop(context);
   }
 
   @override
